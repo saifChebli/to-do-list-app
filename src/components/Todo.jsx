@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState  } from "react";
 import { useTasks } from "../context/TaskContext";
 
 const Todo = () => {
-    const { addTask } = useTasks()
+
+    const { addTask , tasks , toggleComplete, deleteTask } = useTasks()
     
   const [inputValue, setInputValue] = useState("");
 
@@ -26,6 +27,17 @@ const Todo = () => {
 
         <button  className= "bg-indigo-500 text-white px-4 py-2 rounded cursor-pointer hover:bg-indigo-600" onClick={handleAddTask}>Add</button>
       </div>
+      <ul className="space-y-2">
+      {
+        tasks.map(task => (
+            <li key={task.id} className="flex justify-between items-center p-2 border rounded">
+              <span className={`cursor-pointer ${task.completed ?  ' bg-green-100 line-through'  : ''}`} onClick={() => toggleComplete(task.id)} >{task.text}</span>
+              <button className="cursor-pointer" onClick={()=>deleteTask(task.id)}>❌</button>
+            </li>
+        ))
+      }
+      </ul>
+     
     </div>
   );
 };
